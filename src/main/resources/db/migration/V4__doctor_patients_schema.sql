@@ -27,11 +27,11 @@ CREATE TABLE `patient` (
     `patient_id` INT NOT NULL AUTO_INCREMENT,        -- Unique ID for the patient
     `user_id` BIGINT NOT NULL,                          -- Foreign Key from users table
     `name` VARCHAR(255) NOT NULL,                     -- Patient's name
-    `gender` ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,  -- Patient's gender
-    `dob` DATE NOT NULL,                              -- Date of Birth
-    `email` VARCHAR(255) NOT NULL,                    -- Email address
+    `gender` ENUM('MALE', 'FEMALE', 'OTHER'),          -- Patient's gender
+    `dob` DATE,                                       -- Date of Birth
+    `email` VARCHAR(255),                             -- Email address
     `mobile` VARCHAR(15) NOT NULL,                    -- Mobile number
-    `address` TEXT NOT NULL,                          -- Address
+    `address` TEXT,                                   -- Address
     `city` VARCHAR(255),                              -- City
     `state` VARCHAR(255),                             -- State
     `zip` VARCHAR(10),                                -- Zip code

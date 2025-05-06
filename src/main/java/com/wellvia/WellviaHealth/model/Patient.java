@@ -19,19 +19,19 @@ public class Patient {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false)
+    @Column(name = "gender")
     private Gender gender;
 
-    @Column(name = "dob", nullable = false)
+    @Column(name = "dob")
     private Date dob;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "mobile", nullable = false)
     private String mobile;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
 
     @Column(name = "city")

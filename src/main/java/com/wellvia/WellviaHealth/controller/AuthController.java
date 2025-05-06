@@ -4,6 +4,7 @@ import com.wellvia.WellviaHealth.dto.OTPRequestDTO;
 import com.wellvia.WellviaHealth.dto.RegisterRequestDTO;
 import com.wellvia.WellviaHealth.dto.LoginRequestDTO;
 import com.wellvia.WellviaHealth.dto.OtpVerifyDTO;
+import com.wellvia.WellviaHealth.dto.LogoutRequestDTO;
 import com.wellvia.WellviaHealth.service.AuthServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class AuthController {
     @PostMapping("/login/verify-otp")
     public ResponseEntity<?> verifyLoginOtp(@Valid @RequestBody OtpVerifyDTO request) {
         return authService.verifyLoginOtp(request);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader, @RequestBody LogoutRequestDTO request) {
+        String token = authHeader.substring(7); // Remove "Bearer " prefix
+        return authService.logout(token, request);
     }
 
     // ... existing endpoints ...
