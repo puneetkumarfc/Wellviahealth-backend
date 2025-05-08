@@ -71,8 +71,8 @@ public class AuthServiceImpl implements AuthInterface {
         Users user = new Users();
         user.setPhoneNumber(request.getPhoneNumber());
 
-        // Generate a random 6-digit OTP
-        String otp = String.format("%06d", new Random().nextInt(999999));
+        // Set static OTP
+        String otp = "123456";
         user.setOtp(otp);
         user.setOtpCreatedAt(LocalDateTime.now());
         user.setOtpVerified(false);
@@ -109,8 +109,8 @@ public class AuthServiceImpl implements AuthInterface {
         Users user = new Users();
         user.setPhoneNumber(request.getPhoneNumber());
 
-        // Generate a random 6-digit OTP
-        String otp = String.format("%06d", new Random().nextInt(999999));
+        // Set static OTP
+        String otp = "123456";
         user.setOtp(otp);
         user.setOtpCreatedAt(LocalDateTime.now());
         user.setOtpVerified(false);
@@ -171,7 +171,8 @@ public class AuthServiceImpl implements AuthInterface {
         }
 
         Users user = userOpt.get();
-        String otp = String.format("%06d", new Random().nextInt(999999));
+        // Set static OTP
+        String otp = "123456";
         user.setOtp(otp);
         user.setOtpCreatedAt(LocalDateTime.now());
         user.setOtpVerified(false);
