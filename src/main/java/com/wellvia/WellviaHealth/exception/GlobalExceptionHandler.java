@@ -43,12 +43,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllUncaughtException(
             Exception ex, WebRequest request) {
+        logger.severe("Unhandled exception: " + ex.getMessage());
+        ex.printStackTrace(); // This will print the full stack trace to logs
+
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         body.put("error", "Internal Server Error");
-        body.put("message", "An unexpected error occurred");
+        body.put("message", ex.getMessage()); // Include the actual error message
         body.put("path", request.getDescription(false));
+        body.put("details", ex.toString()); // Include more details about the error
+
+        // Log the error
+        auditLogService.logEvent(
+            "UNHANDLED_EXCEPTION",
+            request.getRemoteUser(),
+            ex.getMessage(),
+            "ERROR",
+            ex.toString()
+        );
 
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
