@@ -17,8 +17,8 @@ import java.io.IOException;
 @Component
 public class RateLimitInterceptor implements HandlerInterceptor {
 
-    private static final int MAX_REQUESTS_PER_MINUTE = 60;
-    private static final int MAX_OTP_REQUESTS_PER_5_MINUTES = 3;
+    private static final int MAX_REQUESTS_PER_MINUTE = 100;
+    private static final int MAX_OTP_REQUESTS_PER_5_MINUTES = 10;
 
     @Autowired
     private LoadingCache<String, Integer> requestCountsPerIp;
