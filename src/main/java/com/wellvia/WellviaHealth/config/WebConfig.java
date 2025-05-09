@@ -18,4 +18,13 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(rateLimitInterceptor)
                 .addPathPatterns("/api/**");
     }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // Allow all endpoints
+                .allowedOrigins("http://localhost:5173") // Frontend origin
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true); // For cookies or Authorization headers
+    }
 } 
