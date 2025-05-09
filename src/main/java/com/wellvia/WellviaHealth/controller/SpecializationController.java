@@ -1,7 +1,7 @@
 package com.wellvia.WellviaHealth.controller;
 
 import com.wellvia.WellviaHealth.dto.SpecializationListingRequestDTO;
-import com.wellvia.WellviaHealth.interfaces.SpecializationInterface;
+import com.wellvia.WellviaHealth.service.SpecializationService;
 import com.wellvia.WellviaHealth.model.Specialization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ import java.util.List;
 public class SpecializationController {
 
     @Autowired
-    private SpecializationInterface specializationService;
+    private SpecializationService specializationService;
 
     // Rate limiting configuration
     private final Map<String, Bucket> buckets = new ConcurrentHashMap<>();
