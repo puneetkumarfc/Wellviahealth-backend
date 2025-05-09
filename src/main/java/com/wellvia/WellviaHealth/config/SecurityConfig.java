@@ -31,10 +31,8 @@ public class SecurityConfig {
             .cors(cors -> cors.disable()) // Disable Spring Security's CORS
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // Allow all OPTIONS requests
+                // Allow OPTIONS requests
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                // Allow all auth endpoints
-                .requestMatchers("/api/auth/**").permitAll()
                 // Error endpoint
                 .requestMatchers("/error").permitAll()
                 
@@ -46,6 +44,9 @@ public class SecurityConfig {
                 .requestMatchers("/actuator/metrics/**").permitAll()
                 .requestMatchers("/actuator/**").hasRole("ADMIN")
                 
+                // Public endpoints
+                .requestMatchers("/api/auth/**").permitAll()
+                
                 // Role-based endpoints
                 .requestMatchers("/api/doctor/**").hasRole("DOCTOR")
                 .requestMatchers("/api/patient/**").hasRole("PATIENT")
@@ -55,10 +56,7 @@ public class SecurityConfig {
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .formLogin(form -> form.disable())
-            .headers(headers -> headers
-                .xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
-            );
+            .formLogin(form -> form.disable());
 
         return http.build();
     }

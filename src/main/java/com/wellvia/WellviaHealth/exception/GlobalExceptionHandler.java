@@ -18,8 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @ControllerAdvice
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*", exposedHeaders = {"Authorization", "X-Device-Info"})
 public class GlobalExceptionHandler {
 
     private static final Logger logger = Logger.getLogger(GlobalExceptionHandler.class.getName());

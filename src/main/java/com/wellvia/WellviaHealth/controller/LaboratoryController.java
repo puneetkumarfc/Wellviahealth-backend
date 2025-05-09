@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/laboratories")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*", exposedHeaders = {"Authorization", "X-Device-Info"})
 public class LaboratoryController {
 
     @Autowired
