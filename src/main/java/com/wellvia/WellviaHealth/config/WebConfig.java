@@ -14,23 +14,6 @@ public class WebConfig implements WebMvcConfigurer {
     private RateLimitInterceptor rateLimitInterceptor;
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins(
-                    "http://localhost:5173",
-                    "https://wellvia1-health.vercel.app",
-                    "http://13.115.142.170:8080",
-                    "http://13.115.142.170:3000",
-                    "http://localhost:3000"
-                )
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
-                .allowedHeaders("*")
-                .exposedHeaders("Authorization", "X-Device-Info")
-                .allowCredentials(true)
-                .maxAge(3600); // 1 hour
-    }
-
-    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(rateLimitInterceptor)
                 .addPathPatterns("/api/**");

@@ -31,8 +31,10 @@ public class SecurityConfig {
             .cors(cors -> cors.disable()) // Disable Spring Security's CORS
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // Allow OPTIONS requests first
+                // Allow all OPTIONS requests
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                // Allow all auth endpoints
+                .requestMatchers("/api/auth/**").permitAll()
                 // Error endpoint
                 .requestMatchers("/error").permitAll()
                 
@@ -43,9 +45,6 @@ public class SecurityConfig {
                 .requestMatchers("/actuator/info").permitAll()
                 .requestMatchers("/actuator/metrics/**").permitAll()
                 .requestMatchers("/actuator/**").hasRole("ADMIN")
-                
-                // Public endpoints
-                .requestMatchers("/api/auth/**").permitAll()
                 
                 // Role-based endpoints
                 .requestMatchers("/api/doctor/**").hasRole("DOCTOR")
