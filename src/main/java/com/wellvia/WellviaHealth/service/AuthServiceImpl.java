@@ -100,6 +100,20 @@ public class AuthServiceImpl implements AuthInterface {
                         new ApiResponse<>(false, Collections.singletonList("Phone number already exists"), "Registration failed", null)
                 );
             }
+            else{
+                // Send old otp again
+                // Gupshup API will be implemented here
+                // no need to return below code
+                // no need to make new entry to db
+                Users temp_user = existingUser.get();
+                temp_user.setOtpCreatedAt(LocalDateTime.now());
+                temp_user.setOtpVerified(false);
+                userRepository.save(temp_user);
+
+                return ResponseEntity.ok(
+                        new ApiResponse<>(true, null, "User registered and OTP sent successfully", null)
+                );
+            }
         }
 
         // Validate user type
