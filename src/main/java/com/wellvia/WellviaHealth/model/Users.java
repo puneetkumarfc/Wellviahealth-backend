@@ -25,9 +25,6 @@ public class Users {
     @Column(name = "account_verified")
     private Boolean accountVerified = false;
 
-    @Column(name = "account_registered")
-    private Boolean accountRegistered = false;
-
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -89,14 +86,6 @@ public class Users {
 
     public void setAccountVerified(Boolean accountVerified) {
         this.accountVerified = accountVerified;
-    }
-
-    public Boolean isAccountRegistered() {
-        return accountRegistered;
-    }
-
-    public void setAccountRegistered(Boolean accountRegistered) {
-        this.accountRegistered = accountRegistered;
     }
 
     public LocalDateTime getCreatedAt() {
