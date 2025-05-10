@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 
 public class OtpVerifyDTO {
     @NotBlank(message = "Phone number is required")
-    @Size(min = 10, max = 15, message = "Phone number must be between 10 and 15 characters")
+    @Size(min = 10, max = 13, message = "Phone number must be between 10 and 13 characters")
     private String phoneNumber;
 
     @NotBlank(message = "OTP is required")

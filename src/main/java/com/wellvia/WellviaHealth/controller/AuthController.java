@@ -24,6 +24,11 @@ public class AuthController {
         return authService.register(request);
     }
 
+    @PostMapping("/register/verify-otp")
+    public ResponseEntity<?> verifyRegisterOtp(@Valid @RequestBody OtpVerifyDTO request) {
+        return authService.verifyLoginOtp(request);
+    }
+
     @PostMapping("/login/request-otp")
     public ResponseEntity<?> requestLoginOtp(@Valid @RequestBody LoginRequestDTO request) {
         return authService.requestLoginOtp(request);

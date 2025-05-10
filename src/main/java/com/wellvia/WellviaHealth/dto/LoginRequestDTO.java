@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotNull;
 
 public class LoginRequestDTO {
     private String phoneNumber;  // Optional for social login
-    
     private Integer provider;  // 1 for Facebook, 2 for Google
     private String providerUserId;  // Social login provider's user ID
     
