@@ -408,6 +408,13 @@ public class AuthServiceImpl implements AuthInterface {
                 new ApiResponse<>(false, Collections.singletonList("Invalid OTP"), "OTP verification failed", null)
             );
         }
+
+        if (!user.getAccountVerified()) {
+            return ResponseEntity.badRequest().body(
+                    new ApiResponse<>(false, Collections.singletonList("Invalid User"), "User does not exist", null)
+            );
+        }
+
         if (user.getOtpCreatedAt() == null || user.getOtpCreatedAt().plusMinutes(20).isBefore(LocalDateTime.now())) {
             return ResponseEntity.badRequest().body(
                 new ApiResponse<>(false, Collections.singletonList("OTP expired"), "OTP verification failed", null)
