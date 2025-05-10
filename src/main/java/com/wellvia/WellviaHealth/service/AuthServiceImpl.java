@@ -106,6 +106,15 @@ public class AuthServiceImpl implements AuthInterface {
                 // no need to return below code
                 // no need to make new entry to db
                 Users temp_user = existingUser.get();
+
+                // first check if the userType sent this time is correct or not
+                if (request.getUserType() == null || (request.getUserType() != 1 && request.getUserType() != 2)) {
+                    return ResponseEntity.badRequest().body(
+                            new ApiResponse<>(false, Collections.singletonList("Invalid user type. Must be 1 (Doctor) or 2 (Patient)"), "Registration failed", null)
+                    );
+                }
+
+                // then make otp logic
                 temp_user.setOtpCreatedAt(LocalDateTime.now());
                 temp_user.setOtpVerified(false);
                 userRepository.save(temp_user);
