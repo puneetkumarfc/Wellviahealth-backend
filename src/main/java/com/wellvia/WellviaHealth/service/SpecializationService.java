@@ -5,6 +5,7 @@ import com.wellvia.WellviaHealth.dto.SpecializationListingRequestDTO;
 import com.wellvia.WellviaHealth.mapper.DoctorMapper;
 import com.wellvia.WellviaHealth.model.Specialization;
 import com.wellvia.WellviaHealth.repository.DoctorRepository;
+import com.wellvia.WellviaHealth.repository.DoctorSpecializationMappingRepository;
 import com.wellvia.WellviaHealth.repository.SpecializationRepository;
 import com.wellvia.WellviaHealth.mapper.SpecializationMapper;
 import com.wellvia.WellviaHealth.interfaces.SpecializationInterface;
@@ -37,6 +38,9 @@ public class SpecializationService implements SpecializationInterface {
 
     @Autowired
     private DoctorMapper doctorMapper;
+
+    @Autowired
+    private DoctorSpecializationMappingRepository doctorSpecializationMappingRepository;
 
     @Override
     public List<Specialization> getAllSpecializations() {
@@ -101,9 +105,10 @@ public class SpecializationService implements SpecializationInterface {
     @Override
     public ResponseEntity<ApiResponse<List<DoctorDTO>>> getDoctorsBySpecialization(Long id) {
         List<DoctorDTO> doctors = specializationRepository.findById(id)
-                .map(specialization -> doctorRepository.findBySpecializationIdAndIsDeletedFalse(id)
+                .map(specialization -> doctorSpecializationMappingRepository
+                        .findBySpecializationIdAndIsDeletedFalse(id)
                         .stream()
-                        .map(doctorMapper::toDTO)
+                        .map(mapping -> doctorMapper.toDTO(mapping.getDoctor()))
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
 
