@@ -32,7 +32,7 @@ public class SpecializationService implements SpecializationInterface {
     }
 
     @Override
-    public List<SpecializationDTO> getSpecializationList() {
+    public List<SpecializationDTO> getSpecializationList(SpecializationListingRequestDTO request) {
         return specializationRepository.findAllActiveWithSearch(null)
             .stream()
             .map(specializationMapper::toDTO)

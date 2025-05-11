@@ -1,5 +1,6 @@
 package com.wellvia.WellviaHealth.controller;
 
+import com.wellvia.WellviaHealth.dto.SpecializationDTO;
 import com.wellvia.WellviaHealth.dto.SpecializationListingRequestDTO;
 import com.wellvia.WellviaHealth.model.Specialization;
 import com.wellvia.WellviaHealth.service.SpecializationService;
@@ -17,8 +18,8 @@ public class SpecializationController {
     private SpecializationService specializationService;
 
     @PostMapping("/list")
-    public ResponseEntity<List<Specialization>> listSpecializations(
+    public ResponseEntity<List<SpecializationDTO>> listSpecializations(
             @RequestBody(required = false) SpecializationListingRequestDTO request) {
-        return specializationService.getSpecializations(request != null ? request : new SpecializationListingRequestDTO());
+        return ResponseEntity.ok(specializationService.getSpecializationList(request != null ? request : new SpecializationListingRequestDTO()));
     }
 } 

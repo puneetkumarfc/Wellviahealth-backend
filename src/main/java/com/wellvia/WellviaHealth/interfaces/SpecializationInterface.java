@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SpecializationInterface {
     List<Specialization> getAllSpecializations();
-    List<SpecializationDTO> getSpecializationList();
+    List<SpecializationDTO> getSpecializationList(SpecializationListingRequestDTO request);
     ResponseEntity<List<Specialization>> getSpecializations(SpecializationListingRequestDTO request);
 }
 
