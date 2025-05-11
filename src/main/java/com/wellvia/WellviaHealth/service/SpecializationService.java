@@ -33,7 +33,7 @@ public class SpecializationService implements SpecializationInterface {
 
     @Override
     public List<SpecializationDTO> getSpecializationList(SpecializationListingRequestDTO request) {
-        return specializationRepository.findAllActiveWithSearch(null)
+        return specializationRepository.findAllActiveWithSearch(request != null ? request.getSearch() : null)
             .stream()
             .map(specializationMapper::toDTO)
             .collect(Collectors.toList());
