@@ -48,6 +48,7 @@ public class SecurityConfig {
                 
                 // Public endpoints
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/specializations/**").permitAll()
                 
                 // Role-based endpoints
                 .requestMatchers("/api/doctor/**").hasRole("DOCTOR")
