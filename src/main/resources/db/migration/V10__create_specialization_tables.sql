@@ -15,7 +15,7 @@ CREATE TABLE specialization (
 -- Create doctor_specialization_mapping table
 CREATE TABLE doctor_specialization_mapping (
     ds_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    doctor_id BIGINT NOT NULL,
+    doctor_id INT NOT NULL,
     specialization_id BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
