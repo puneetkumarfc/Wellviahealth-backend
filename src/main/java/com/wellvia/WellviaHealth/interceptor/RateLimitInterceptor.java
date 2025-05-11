@@ -19,12 +19,16 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
     private static final int MAX_REQUESTS_PER_MINUTE = 100;
     private static final int MAX_OTP_REQUESTS_PER_2_MINUTES = 10;
+    private static final int MAX_SPECIALIZATION_REQUESTS_PER_MINUTE = 60;
 
     @Autowired
     private LoadingCache<String, Integer> requestCountsPerIp;
 
     @Autowired
     private LoadingCache<String, Integer> otpRequestCountsPerIp;
+
+    @Autowired
+    private LoadingCache<String, Integer> specializationRequestCountsPerIp;
 
     @Autowired
     private AuditLogService auditLogService;
@@ -36,9 +40,30 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
         if (requestURI.contains("/api/auth/login/request-otp") || requestURI.contains("/api/auth/register")) {
             return checkOtpRateLimit(clientIp, response);
+        } else if (requestURI.contains("/api/specializations")) {
+            return checkSpecializationRateLimit(clientIp, response);
         } else {
             return checkGeneralRateLimit(clientIp, response);
         }
+    }
+
+    private boolean checkSpecializationRateLimit(String clientIp, HttpServletResponse response) throws ExecutionException, IOException {
+        int requests = specializationRequestCountsPerIp.get(clientIp);
+        if (requests >= MAX_SPECIALIZATION_REQUESTS_PER_MINUTE) {
+            auditLogService.logEvent(
+                "RATE_LIMIT_EXCEEDED",
+                clientIp,
+                "Specialization request limit exceeded",
+                "ERROR",
+                null
+            );
+            response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
+            response.getWriter().write("Specialization request limit exceeded. Please try again after a minute.");
+            return false;
+        }
+        requests++;
+        specializationRequestCountsPerIp.put(clientIp, requests);
+        return true;
     }
 
     private boolean checkOtpRateLimit(String clientIp, HttpServletResponse response) throws ExecutionException, IOException {

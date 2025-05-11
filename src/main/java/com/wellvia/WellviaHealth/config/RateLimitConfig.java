@@ -33,4 +33,16 @@ public class RateLimitConfig {
                 }
             });
     }
+
+    @Bean
+    public LoadingCache<String, Integer> specializationRequestCountsPerIp() {
+        return CacheBuilder.newBuilder()
+            .expireAfterWrite(1, TimeUnit.MINUTES)
+            .build(new CacheLoader<String, Integer>() {
+                @Override
+                public Integer load(String key) {
+                    return 0;
+                }
+            });
+    }
 } 

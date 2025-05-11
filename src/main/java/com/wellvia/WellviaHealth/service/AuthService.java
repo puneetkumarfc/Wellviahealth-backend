@@ -20,7 +20,7 @@ import com.wellvia.WellviaHealth.dto.ApiResponse;
 import java.util.Collections;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.Random;
+
 import com.wellvia.WellviaHealth.dto.LoginRequestDTO;
 import com.wellvia.WellviaHealth.dto.OtpVerifyDTO;
 import com.wellvia.WellviaHealth.security.JwtUtil;
@@ -32,7 +32,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import com.wellvia.WellviaHealth.dto.LogoutRequestDTO;
 
 @Service
-public class AuthServiceImpl implements AuthInterface {
+public class AuthService implements AuthInterface {
 
     @Autowired
     private UserRepository userRepository;
