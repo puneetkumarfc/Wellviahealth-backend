@@ -13,7 +13,7 @@ public class DoctorMapper {
         }
 
         DoctorDTO dto = new DoctorDTO();
-        dto.setUserId(doctor.getDoctorId());
+        dto.setDoctorId(doctor.getDoctorId());
         dto.setName(doctor.getName());
         dto.setEmail(doctor.getEmail());
         dto.setMobile(doctor.getMobile());

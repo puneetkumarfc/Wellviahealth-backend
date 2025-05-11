@@ -9,7 +9,7 @@ import java.util.Date;
 public class DoctorDTO {
 
     @NotNull
-    private Long userId;  // Foreign key reference to the User
+    private Long doctorId; 
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -53,12 +53,12 @@ public class DoctorDTO {
 
     // Getters and Setters
 
-    public Long getUserId() {
-        return userId;
+    public Long getDoctorId() {
+        return doctorId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setDoctorId(Long doctorId) {
+        this.doctorId = doctorId;
     }
 
     public String getName() {
