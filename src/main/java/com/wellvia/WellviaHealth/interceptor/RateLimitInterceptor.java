@@ -18,7 +18,7 @@ import java.io.IOException;
 public class RateLimitInterceptor implements HandlerInterceptor {
 
     private static final int MAX_REQUESTS_PER_MINUTE = 100;
-    private static final int MAX_OTP_REQUESTS_PER_5_MINUTES = 10;
+    private static final int MAX_OTP_REQUESTS_PER_2_MINUTES = 10;
 
     @Autowired
     private LoadingCache<String, Integer> requestCountsPerIp;
@@ -43,7 +43,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
     private boolean checkOtpRateLimit(String clientIp, HttpServletResponse response) throws ExecutionException, IOException {
         int requests = otpRequestCountsPerIp.get(clientIp);
-        if (requests >= MAX_OTP_REQUESTS_PER_5_MINUTES) {
+        if (requests >= MAX_OTP_REQUESTS_PER_2_MINUTES) {
             auditLogService.logEvent(
                 "RATE_LIMIT_EXCEEDED",
                 clientIp,
@@ -52,7 +52,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
                 null
             );
             response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-            response.getWriter().write("OTP request limit exceeded. Please try again after 5 minutes.");
+            response.getWriter().write("OTP request limit exceeded. Please try again after 2 minutes.");
             return false;
         }
         requests++;

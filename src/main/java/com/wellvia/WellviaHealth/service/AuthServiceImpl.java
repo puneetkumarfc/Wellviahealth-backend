@@ -250,7 +250,7 @@ public class AuthServiceImpl implements AuthInterface {
             );
         }
 
-        if (user.getOtpCreatedAt() == null || user.getOtpCreatedAt().plusMinutes(3).isBefore(LocalDateTime.now())) {
+        if (user.getOtpCreatedAt() == null || user.getOtpCreatedAt().plusMinutes(2).isBefore(LocalDateTime.now())) {
             return ResponseEntity.badRequest().body(
                     new ApiResponse<>(false, Collections.singletonList("OTP expired"), "OTP verification failed", null)
             );
@@ -438,7 +438,7 @@ public class AuthServiceImpl implements AuthInterface {
             );
         }
 
-        if (user.getOtpCreatedAt() == null || user.getOtpCreatedAt().plusMinutes(20).isBefore(LocalDateTime.now())) {
+        if (user.getOtpCreatedAt() == null || user.getOtpCreatedAt().plusMinutes(2).isBefore(LocalDateTime.now())) {
             return ResponseEntity.badRequest().body(
                 new ApiResponse<>(false, Collections.singletonList("OTP expired"), "OTP verification failed", null)
             );

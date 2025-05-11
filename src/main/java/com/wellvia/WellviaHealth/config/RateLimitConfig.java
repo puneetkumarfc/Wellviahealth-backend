@@ -25,7 +25,7 @@ public class RateLimitConfig {
     @Bean
     public LoadingCache<String, Integer> otpRequestCountsPerIp() {
         return CacheBuilder.newBuilder()
-            .expireAfterWrite(5, TimeUnit.MINUTES)
+            .expireAfterWrite(2, TimeUnit.MINUTES)
             .build(new CacheLoader<String, Integer>() {
                 @Override
                 public Integer load(String key) {
