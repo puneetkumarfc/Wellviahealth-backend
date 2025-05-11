@@ -22,7 +22,7 @@ CREATE TABLE doctor_specialization_mapping (
     last_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     last_modified_by BIGINT,
     is_deleted BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (doctor_id) REFERENCES doctor(id),
+    FOREIGN KEY (doctor_id) REFERENCES doctor(doctor_id),
     FOREIGN KEY (specialization_id) REFERENCES specialization(id),
     FOREIGN KEY (created_by) REFERENCES users(id),
     FOREIGN KEY (last_modified_by) REFERENCES users(id),
