@@ -1,4 +1,4 @@
-INSERT INTO specializations (name, created_at, created_by, last_modified_at, last_modified_by, is_deleted) VALUES
+INSERT INTO specialization (name, created_at, created_by, last_modified_at, last_modified_by, is_deleted) VALUES
 ('Cold, Fever, Cough and Sneeze', CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1, FALSE),
 ('Diabetes Consult', CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1, FALSE),
 ('General Physician', CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1, FALSE),
