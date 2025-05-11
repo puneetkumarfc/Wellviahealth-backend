@@ -2,11 +2,14 @@ package com.wellvia.WellviaHealth.controller;
 
 import com.wellvia.WellviaHealth.dto.SpecializationDTO;
 import com.wellvia.WellviaHealth.dto.SpecializationListingRequestDTO;
+import com.wellvia.WellviaHealth.dto.ApiResponse;
 import com.wellvia.WellviaHealth.model.Specialization;
 import com.wellvia.WellviaHealth.service.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -18,8 +21,9 @@ public class SpecializationController {
     private SpecializationService specializationService;
 
     @PostMapping("/list")
-    public ResponseEntity<List<SpecializationDTO>> listSpecializations(
+    public ResponseEntity<ApiResponse<List<SpecializationDTO>>> listSpecializations(
             @RequestBody(required = false) SpecializationListingRequestDTO request) {
-        return ResponseEntity.ok(specializationService.getSpecializationList(request != null ? request : new SpecializationListingRequestDTO()));
+        return specializationService.getSpecializationList(
+            request != null ? request : new SpecializationListingRequestDTO());
     }
 } 

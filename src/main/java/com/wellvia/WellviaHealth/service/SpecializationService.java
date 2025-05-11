@@ -13,6 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.http.HttpStatus;
+import java.util.Collections;
+import com.wellvia.WellviaHealth.dto.ApiResponse;
 
 @Service
 public class SpecializationService implements SpecializationInterface {
@@ -32,11 +35,22 @@ public class SpecializationService implements SpecializationInterface {
     }
 
     @Override
-    public List<SpecializationDTO> getSpecializationList(SpecializationListingRequestDTO request) {
-        return specializationRepository.findAllActiveWithSearch(request != null ? request.getSearch() : null)
+    public ResponseEntity<ApiResponse<List<SpecializationDTO>>> getSpecializationList(SpecializationListingRequestDTO request) {
+        List<SpecializationDTO> specializations = specializationRepository.findAllActiveWithSearch(
+            request != null ? request.getSearch() : null)
             .stream()
             .map(specializationMapper::toDTO)
             .collect(Collectors.toList());
+        
+        if (specializations.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ApiResponse<>(false, 
+                    Collections.singletonList("No specializations found"), 
+                    "No specializations found", 
+                    null));
+        }
+        
+        return ResponseEntity.ok(new ApiResponse<>(true, null, "Specializations retrieved successfully", specializations));
     }
 
     @Override
