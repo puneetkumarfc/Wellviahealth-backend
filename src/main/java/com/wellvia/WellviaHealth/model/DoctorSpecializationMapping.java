@@ -3,7 +3,7 @@ package com.wellvia.WellviaHealth.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
-import com.wellvia.WellviaHealth.model.User;
+import com.wellvia.WellviaHealth.model.Users;
 
 @Entity
 @Table(name = "doctor_specialization_mapping")
@@ -28,14 +28,14 @@ public class DoctorSpecializationMapping {
 
     @ManyToOne
     @JoinColumn(name = "created_by")
-    private User createdBy;
+    private Users createdBy;
 
     @Column(name = "last_modified_at")
     private LocalDateTime lastModifiedAt;
 
     @ManyToOne
     @JoinColumn(name = "last_modified_by")
-    private User lastModifiedBy;
+    private Users lastModifiedBy;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
