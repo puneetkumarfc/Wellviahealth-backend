@@ -28,28 +28,3 @@ CREATE TABLE doctor_specialization_mapping (
     FOREIGN KEY (last_modified_by) REFERENCES users(id),
     UNIQUE KEY uk_doctor_specialization (doctor_id, specialization_id)
 );
-
--- Insert specializations
-INSERT INTO specialization (name, created_by) VALUES
-('Cold, Fever, Cough and Sneeze', 1),
-('Diabetes Consult', 1),
-('General Physician', 1),
-('Dental', 1),
-('Dermatology', 1),
-('Hair Scalp Care', 1),
-('Gynecology', 1),
-('Infertility', 1),
-('Ophthalmology', 1),
-('Orthopedics', 1),
-('Pediatrics', 1),
-('Psychology', 1),
-('Sexology', 1),
-('Food and Nutrition', 1),
-('Ear Nose and Throat', 1),
-('Cardiology', 1),
-('Psychiatry', 1),
-('Pulmonology', 1),
-('Neurology', 1),
-('Gastroenterology', 1),
-('Urology', 1),
-('Oncology', 1); 
