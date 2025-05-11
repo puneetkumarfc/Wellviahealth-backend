@@ -8,7 +8,7 @@ CREATE TABLE specialization (
     last_modified_by BIGINT,
     is_deleted BOOLEAN DEFAULT FALSE,
     UNIQUE KEY uk_specialization_name (name),
-    FOREIGN KEY (created_by) REFERENCES user(id),
+    FOREIGN KEY (created_by) REFERENCES users(id),
     FOREIGN KEY (last_modified_by) REFERENCES user(id)
 );
 
@@ -25,7 +25,7 @@ CREATE TABLE doctor_specialization_mapping (
     FOREIGN KEY (doctor_id) REFERENCES doctor(id),
     FOREIGN KEY (specialization_id) REFERENCES specialization(id),
     FOREIGN KEY (created_by) REFERENCES user(id),
-    FOREIGN KEY (last_modified_by) REFERENCES user(id),
+    FOREIGN KEY (last_modified_by) REFERENCES users(id),
     UNIQUE KEY uk_doctor_specialization (doctor_id, specialization_id)
 );
 
