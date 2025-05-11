@@ -1,6 +1,7 @@
 package com.wellvia.WellviaHealth.interfaces;
 
 import com.wellvia.WellviaHealth.dto.ApiResponse;
+import com.wellvia.WellviaHealth.dto.DoctorDTO;
 import com.wellvia.WellviaHealth.dto.SpecializationDTO;
 import com.wellvia.WellviaHealth.dto.SpecializationListingRequestDTO;
 import com.wellvia.WellviaHealth.model.Specialization;
@@ -12,6 +13,7 @@ public interface SpecializationInterface {
     List<Specialization> getAllSpecializations();
     ResponseEntity<ApiResponse<List<SpecializationDTO>>> getSpecializationList(SpecializationListingRequestDTO request);
     ResponseEntity<List<Specialization>> getSpecializations(SpecializationListingRequestDTO request);
+    ResponseEntity<ApiResponse<List<DoctorDTO>>> getDoctorsBySpecialization(Long id);
 }
 
 

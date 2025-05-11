@@ -1,5 +1,6 @@
 package com.wellvia.WellviaHealth.controller;
 
+import com.wellvia.WellviaHealth.dto.DoctorDTO;
 import com.wellvia.WellviaHealth.dto.SpecializationDTO;
 import com.wellvia.WellviaHealth.dto.SpecializationListingRequestDTO;
 import com.wellvia.WellviaHealth.dto.ApiResponse;
@@ -25,5 +26,10 @@ public class SpecializationController {
             @RequestBody(required = false) SpecializationListingRequestDTO request) {
         return specializationService.getSpecializationList(
             request != null ? request : new SpecializationListingRequestDTO());
+    }
+
+    @GetMapping("/{id}/doctors")
+    public ResponseEntity<ApiResponse<List<DoctorDTO>>> getDoctorsBySpecialization(@PathVariable Long id) {
+        return specializationService.getDoctorsBySpecialization(id);
     }
 } 

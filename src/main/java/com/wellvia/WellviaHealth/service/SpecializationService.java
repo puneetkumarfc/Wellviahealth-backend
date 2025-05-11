@@ -1,7 +1,10 @@
 package com.wellvia.WellviaHealth.service;
 
+import com.wellvia.WellviaHealth.dto.DoctorDTO;
 import com.wellvia.WellviaHealth.dto.SpecializationListingRequestDTO;
+import com.wellvia.WellviaHealth.mapper.DoctorMapper;
 import com.wellvia.WellviaHealth.model.Specialization;
+import com.wellvia.WellviaHealth.repository.DoctorRepository;
 import com.wellvia.WellviaHealth.repository.SpecializationRepository;
 import com.wellvia.WellviaHealth.mapper.SpecializationMapper;
 import com.wellvia.WellviaHealth.interfaces.SpecializationInterface;
@@ -28,6 +31,12 @@ public class SpecializationService implements SpecializationInterface {
 
     @Autowired
     private AuditLogService auditLogService;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    @Autowired
+    private DoctorMapper doctorMapper;
 
     @Override
     public List<Specialization> getAllSpecializations() {
@@ -87,5 +96,25 @@ public class SpecializationService implements SpecializationInterface {
             );
             throw e;
         }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<List<DoctorDTO>>> getDoctorsBySpecialization(Long id) {
+        List<DoctorDTO> doctors = specializationRepository.findById(id)
+                .map(specialization -> doctorRepository.findBySpecializationIdAndIsDeletedFalse(id)
+                        .stream()
+                        .map(doctorMapper::toDTO)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+
+        if (doctors.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(false,
+                            Collections.singletonList("No doctors found for this specialization"),
+                            "No doctors found",
+                            null));
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>(true, null, "Doctors retrieved successfully", doctors));
     }
 } 
