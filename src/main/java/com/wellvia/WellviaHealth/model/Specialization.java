@@ -16,6 +16,9 @@ public class Specialization {
     @Column(nullable = false)
     private String name;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

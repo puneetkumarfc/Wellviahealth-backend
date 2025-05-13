@@ -15,6 +15,7 @@ public class SpecializationMapper {
         SpecializationDTO dto = new SpecializationDTO();
         dto.setId(specialization.getId());
         dto.setName(specialization.getName());
+        dto.setImagePath(specialization.getImagePath());
         return dto;
     }
 } 
