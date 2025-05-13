@@ -6,7 +6,9 @@ public class LoginRequestDTO {
     private String phoneNumber;  // Optional for social login
     private Integer provider;  // 1 for Facebook, 2 for Google
     private String providerUserId;  // Social login provider's user ID
-    
+    private String email; // Will be sent in the case of social login
+    private String name; // Will be sent in the case of social login
+
     private String deviceInfo;
 
     public String getPhoneNumber() {
@@ -40,4 +42,12 @@ public class LoginRequestDTO {
     public void setDeviceInfo(String deviceInfo) {
         this.deviceInfo = deviceInfo;
     }
+
+    public String getEmail() { return this.email; }
+
+    public void setEmail(String email) { this.email = email; }
+
+    public String getName() { return this.name; }
+
+    public void setName(String name) { this.name = name; }
 } 

@@ -352,24 +352,59 @@ public class AuthService implements AuthInterface {
             );
         }
 
+        if(request.getProviderUserId() == null || request.getProviderUserId().isEmpty()){
+            return ResponseEntity.badRequest().body(
+                    new ApiResponse<>(false, Collections.singletonList("Provider user id is required"), "Login failed", null)
+            );
+        }
+
+        if(request.getEmail() == null || request.getEmail().isEmpty()){
+            return ResponseEntity.badRequest().body(
+                    new ApiResponse<>(false, Collections.singletonList("Email is required"), "Login failed", null)
+            );
+        }
+
+        if(request.getName() == null || request.getName().isEmpty()){
+            return ResponseEntity.badRequest().body(
+                    new ApiResponse<>(false, Collections.singletonList("Name is required"), "Login failed", null)
+            );
+        }
+
         // Find user by provider and provider_user_id
         Optional<Users> userOpt = userRepository.findByProviderAndProviderUserId(
             request.getProvider(), request.getProviderUserId());
 
         Users user;
+
         if (userOpt.isEmpty()) {
             // Create new user for social login
             user = new Users();
             user.setProvider(request.getProvider());
             user.setProviderUserId(request.getProviderUserId());
             user.setOtpVerified(true);  // Social login is pre-verified
-            
-            // Set default user type as Patient (2)
-            Optional<UserType> userType = userTypeRepository.findById(2L);
-            userType.ifPresent(user::setUserType);
+            user.setAccountVerified(true);
+
+            // By default set to 2
+            Optional<UserType> userType = userTypeRepository.findById((long)2);
+            if (userType.isEmpty()) {
+                return ResponseEntity.badRequest().body(
+                        new ApiResponse<>(false, Collections.singletonList("Invalid user type"), "Registration failed", null)
+                );
+            }
+            user.setUserType(userType.get());
             
             user = userRepository.save(user);
-        } else {
+
+            Patient patient = new Patient();
+            patient.setUser(user);
+            patient.setName(request.getName());
+            patient.setMobile(request.getPhoneNumber());
+            patient.setEmail(request.getEmail());
+            patient.setIsDeleted(false);
+            patientRepository.save(patient);
+
+        }
+        else {
             user = userOpt.get();
         }
 
@@ -404,6 +439,36 @@ public class AuthService implements AuthInterface {
         Map<String, Object> data = new HashMap<>();
         data.put("token", token);
         data.put("role", role);
+
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("id", user.getId());
+        userData.put("phoneNumber", user.getPhoneNumber());
+        userData.put("userType", user.getUserType() != null ? user.getUserType().getName() : null);
+
+        if (user.getUserType().getName().equalsIgnoreCase("PATIENT")) {
+            Optional<Patient> patientOpt = patientRepository.findByUserId(user.getId());
+            patientOpt.ifPresent(patient -> {
+                // Basic user info
+                userData.put("name", patient.getName());
+                userData.put("email", patient.getEmail());
+                userData.put("mobile", patient.getMobile());
+                userData.put("gender", patient.getGender());
+                userData.put("dob", patient.getDob());
+
+                // Patient specific info
+                userData.put("profileImage", patient.getProfileImage());
+                userData.put("address", patient.getAddress());
+                userData.put("city", patient.getCity());
+                userData.put("state", patient.getState());
+                userData.put("zip", patient.getZip());
+                userData.put("country", patient.getCountry());
+                userData.put("bloodGroup", patient.getBloodGroup());
+                userData.put("allergies", patient.getAllergies());
+                userData.put("medicalConditions", patient.getMedicalConditions());
+            });
+        }
+
+        data.put("user", userData);
 
         return ResponseEntity.ok(
             new ApiResponse<>(true, null, "Login successful", data)
