@@ -1,0 +1,1 @@
+ALTER TABLE doctor ADD password varchar(255);
