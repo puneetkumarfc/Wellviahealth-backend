@@ -38,6 +38,9 @@ public class SecurityConfig {
                 // Error endpoint
                 .requestMatchers("/error").permitAll()
                 
+                // Static resources
+                .requestMatchers("/resources/**").permitAll()
+                
                 // Actuator endpoints
                 .requestMatchers("/actuator/health").permitAll()
                 .requestMatchers("/actuator/health/**").permitAll()
