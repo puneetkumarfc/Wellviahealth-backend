@@ -106,8 +106,8 @@ public class SpecializationService implements SpecializationInterface {
     public ResponseEntity<ApiResponse<List<DoctorDTO>>> getDoctorsBySpecialization(Long id) {
         List<DoctorDTO> doctors;
         
-        if (id == null) {
-            // If no ID provided, return all doctors
+        if (id == null || id == 0) {
+            // If no ID provided or ID is 0, return all doctors
             doctors = doctorRepository.findAll().stream()
                     .filter(doctor -> !doctor.getIsDeleted())
                     .map(doctorMapper::toDTO)
