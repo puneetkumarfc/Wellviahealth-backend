@@ -1,0 +1,2 @@
+ALTER TABLE patient
+MODIFY mobile VARCHAR(15) NULL;
