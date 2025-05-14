@@ -1,0 +1,2 @@
+ALTER TABLE login_history
+MODIFY COLUMN login_method ENUM('MOBILE', 'GOOGLE', 'FACEBOOK', 'EMAIL') NOT NULL;
