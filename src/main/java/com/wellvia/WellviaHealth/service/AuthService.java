@@ -344,7 +344,7 @@ public class AuthService implements AuthInterface {
         );
     }
 
-    private ResponseEntity<?> handleSocialLogin(LoginRequestDTO request) {
+    public ResponseEntity<?> handleSocialLogin(LoginRequestDTO request) {
         // Validate provider
         if (request.getProvider() != 1 && request.getProvider() != 2) {
             return ResponseEntity.badRequest().body(
@@ -370,10 +370,7 @@ public class AuthService implements AuthInterface {
             );
         }
 
-        // Find user by provider and provider_user_id
-        Optional<Users> userOpt = userRepository.findByProviderAndProviderUserId(
-            request.getProvider(), request.getProviderUserId());
-
+        Optional<Users> userOpt = userRepository.findByProviderAndProviderUserIdWithUserType(request.getProvider(), request.getProviderUserId());
         Users user;
 
         if (userOpt.isEmpty()) {

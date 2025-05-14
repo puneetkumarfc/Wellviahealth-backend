@@ -15,5 +15,8 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     Optional<Users> findByPhoneNumberWithUserType(String phoneNumber);
 
     Optional<Users> findByProviderAndProviderUserId(Integer provider, String providerUserId);
+
+    @Query("SELECT u FROM Users u LEFT JOIN FETCH u.userType WHERE u.provider = ?1 AND u.providerUserId = ?2")
+    Optional<Users> findByProviderAndProviderUserIdWithUserType(Integer provider, String providerUserId);
 }
 
