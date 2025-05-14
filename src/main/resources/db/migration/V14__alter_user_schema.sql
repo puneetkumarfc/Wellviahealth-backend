@@ -1,0 +1,2 @@
+ALTER TABLE users
+MODIFY phone_number VARCHAR(15) UNIQUE NULL;
