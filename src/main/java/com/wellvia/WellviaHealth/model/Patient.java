@@ -28,7 +28,7 @@ public class Patient {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "mobile", nullable = false)
+    @Column(name = "mobile")
     private String mobile;
 
     @Column(name = "address")

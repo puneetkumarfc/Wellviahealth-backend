@@ -395,9 +395,14 @@ public class AuthService implements AuthInterface {
             Patient patient = new Patient();
             patient.setUser(user);
             patient.setName(request.getName());
-            patient.setMobile(request.getPhoneNumber());
             patient.setEmail(request.getEmail());
             patient.setIsDeleted(false);
+            // Set a default mobile number if not provided
+            if (request.getPhoneNumber() != null && !request.getPhoneNumber().isEmpty()) {
+                patient.setMobile(request.getPhoneNumber());
+            } else {
+                patient.setMobile("0000000000"); // Set a default value
+            }
             patientRepository.save(patient);
 
         }
