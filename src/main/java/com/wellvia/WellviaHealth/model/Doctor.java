@@ -2,6 +2,7 @@ package com.wellvia.WellviaHealth.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "doctor")
@@ -66,6 +67,12 @@ public class Doctor {
 
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    private List<AppointmentSlot> appointmentSlots;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    private List<Appointment> appointments;
 
     // Constructors
     public Doctor() {}
@@ -222,6 +229,22 @@ public class Doctor {
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public List<AppointmentSlot> getAppointmentSlots() {
+        return appointmentSlots;
+    }
+
+    public void setAppointmentSlots(List<AppointmentSlot> appointmentSlots) {
+        this.appointmentSlots = appointmentSlots;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 
     // Enum for gender

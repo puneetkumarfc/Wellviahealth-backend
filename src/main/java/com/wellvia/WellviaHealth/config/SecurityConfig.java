@@ -52,9 +52,9 @@ public class SecurityConfig {
                 // Public endpoints
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/specializations/**").permitAll()
+                .requestMatchers("/api/doctor/**").permitAll()
                 
                 // Role-based endpoints
-                .requestMatchers("/api/doctor/**").hasRole("DOCTOR")
                 .requestMatchers("/api/patient/**").hasRole("PATIENT")
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/laboratories/**").hasAnyRole("PATIENT", "DOCTOR", "ADMIN")

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
+import java.util.List;
 
 public class DoctorDTO {
 
@@ -50,6 +51,10 @@ public class DoctorDTO {
     private String practiceAddress;
 
     private String agreementFile;
+
+    // New fields for appointments
+    private List<AppointmentSlotDTO> appointmentSlots;
+    private List<AppointmentDTO> appointments;
 
     // Getters and Setters
 
@@ -187,5 +192,21 @@ public class DoctorDTO {
 
     public void setAgreementFile(String agreementFile) {
         this.agreementFile = agreementFile;
+    }
+
+    public List<AppointmentSlotDTO> getAppointmentSlots() {
+        return appointmentSlots;
+    }
+
+    public void setAppointmentSlots(List<AppointmentSlotDTO> appointmentSlots) {
+        this.appointmentSlots = appointmentSlots;
+    }
+
+    public List<AppointmentDTO> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<AppointmentDTO> appointments) {
+        this.appointments = appointments;
     }
 }
