@@ -104,18 +104,29 @@ public class SpecializationService implements SpecializationInterface {
 
     @Override
     public ResponseEntity<ApiResponse<List<DoctorDTO>>> getDoctorsBySpecialization(Long id) {
-        List<DoctorDTO> doctors = specializationRepository.findById(id)
-                .map(specialization -> doctorSpecializationMappingRepository
-                        .findBySpecializationIdAndIsDeletedFalse(id)
-                        .stream()
-                        .map(mapping -> doctorMapper.toDTO(mapping.getDoctor()))
-                        .collect(Collectors.toList()))
-                .orElse(Collections.emptyList());
+        List<DoctorDTO> doctors;
+        
+        if (id == null) {
+            // If no ID provided, return all doctors
+            doctors = doctorRepository.findAll().stream()
+                    .filter(doctor -> !doctor.getIsDeleted())
+                    .map(doctorMapper::toDTO)
+                    .collect(Collectors.toList());
+        } else {
+            // If ID provided, return doctors for that specialization
+            doctors = specializationRepository.findById(id)
+                    .map(specialization -> doctorSpecializationMappingRepository
+                            .findBySpecializationIdAndIsDeletedFalse(id)
+                            .stream()
+                            .map(mapping -> doctorMapper.toDTO(mapping.getDoctor()))
+                            .collect(Collectors.toList()))
+                    .orElse(Collections.emptyList());
+        }
 
         if (doctors.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ApiResponse<>(false,
-                            Collections.singletonList("No doctors found for this specialization"),
+                            Collections.singletonList("No doctors found"),
                             "No doctors found",
                             null));
         }
