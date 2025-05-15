@@ -109,8 +109,7 @@ public class SpecializationService implements SpecializationInterface {
         
         if (id == null || id == 0) {
             // If no ID provided or ID is 0, return all doctors
-            doctors = doctorRepository.findAll().stream()
-                    .filter(doctor -> !doctor.getIsDeleted())
+            doctors = doctorRepository.findAllWithSlots().stream()
                     .map(doctorMapper::toDTO)
                     .collect(Collectors.toList());
         } else {

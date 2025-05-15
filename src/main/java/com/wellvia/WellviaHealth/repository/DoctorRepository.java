@@ -19,4 +19,9 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
            "AND d.isDeleted = false " +
            "AND (a IS NULL OR a.isAvailable = true)")
     Optional<Doctor> findByIdWithAvailableSlots(@Param("doctorId") Long doctorId);
+
+    @Query("SELECT DISTINCT d FROM Doctor d " +
+           "LEFT JOIN FETCH d.appointmentSlots " +
+           "WHERE d.isDeleted = false")
+    List<Doctor> findAllWithSlots();
 } 
