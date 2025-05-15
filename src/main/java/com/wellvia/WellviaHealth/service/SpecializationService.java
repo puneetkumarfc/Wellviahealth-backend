@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import java.util.Collections;
 import com.wellvia.WellviaHealth.dto.ApiResponse;
+import com.wellvia.WellviaHealth.model.Doctor;
 
 @Service
 public class SpecializationService implements SpecializationInterface {
@@ -116,7 +117,7 @@ public class SpecializationService implements SpecializationInterface {
             // If ID provided, return doctors for that specialization
             doctors = specializationRepository.findById(id)
                     .map(specialization -> doctorSpecializationMappingRepository
-                            .findBySpecializationIdAndIsDeletedFalse(id)
+                            .findBySpecializationIdWithDoctorAndSlots(id)
                             .stream()
                             .map(mapping -> doctorMapper.toDTO(mapping.getDoctor()))
                             .collect(Collectors.toList()))

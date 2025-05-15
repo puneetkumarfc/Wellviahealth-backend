@@ -50,4 +50,13 @@ public class DoctorSpecializationMapping {
     protected void onUpdate() {
         lastModifiedAt = LocalDateTime.now();
     }
+
+    // Explicit getter methods
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public Specialization getSpecialization() {
+        return specialization;
+    }
 } 
